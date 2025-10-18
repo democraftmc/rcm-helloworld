@@ -1,13 +1,10 @@
 package group.aelysium.rcm.helloworld;
 
-import group.aelysium.rustyconnector.core.lib.events.Event;
-import group.aelysium.rustyconnector.core.lib.events.EventListener;
-import group.aelysium.rustyconnector.core.lib.lang.Component;
-import group.aelysium.rustyconnector.core.lib.module.Context;
-import group.aelysium.rustyconnector.core.lib.module.ExternalModuleBuilder;
-import group.aelysium.rustyconnector.core.lib.module.Module;
-import group.aelysium.rustyconnector.core.lib.serviceable.Service;
+import group.aelysium.rustyconnector.common.events.EventManager;
+import group.aelysium.rustyconnector.common.modules.ExternalModuleBuilder;
+import group.aelysium.rustyconnector.common.modules.Module;
 import group.aelysium.rustyconnector.proxy.ProxyKernel;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,16 +22,15 @@ public class HelloWorldModule implements Module {
 
     public static class Builder extends ExternalModuleBuilder<HelloWorldModule> {
         @Override
-        public void bind(@NotNull Object kernel, @NotNull HelloWorldModule instance) {
-            if (!(kernel instanceof ProxyKernel)) {
-                return;
+        public void bind(@NotNull ProxyKernel kernel, @NotNull HelloWorldModule instance) {
+            try {
+                kernel.fetchModule("EventManager").onStart(e -> {
+                    EventManager eventManager = (EventManager) e;
+                    System.out.println("HelloWorld module registered with EventManager!");
+                });
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            ProxyKernel proxyKernel = (ProxyKernel) kernel;
-            EventListener eventListener = proxyKernel.services().search(EventListener.class);
-            
-            eventListener.on(Event.PROXY_STARTED, event -> {
-                System.out.println("HelloWorld module detected proxy started event!");
-            });
         }
 
         @NotNull

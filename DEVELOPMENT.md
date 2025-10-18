@@ -1,30 +1,40 @@
 # Development Notes
 
-## RustyConnector SDK Stub Classes
+## RustyConnector SDK Version
 
-This project includes minimal stub interfaces for the RustyConnector Core SDK in the `src/main/java/group/aelysium/rustyconnector/` package. These stubs are provided to allow the module to compile without access to the actual RustyConnector SDK repository.
+This module uses RustyConnector Core SDK version **0.9.1**, which is the current stable release.
 
-**Important**: When this module is loaded by RustyConnector at runtime, the actual SDK classes will be used instead of these stubs. These stubs only provide the minimal interface definitions needed for compilation.
+## Dependencies
 
-If you have access to the RustyConnector SDK repository, you can replace the stub dependency in `build.gradle`:
+The module depends on:
+- `group.aelysium.rustyconnector:core:0.9.1` - The RustyConnector Core SDK
+- `net.kyori:adventure-api:4.17.0` - For text components
+- `org.jetbrains:annotations:24.1.0` - For annotations
 
-```gradle
-// Replace this:
-dependencies {
-    compileOnly 'org.jetbrains:annotations:24.0.1'
-}
+## Build Configuration
 
-// With this (when repository is accessible):
-repositories {
-    mavenCentral()
-    maven {
-        url = 'https://repo.aelysium.group/repository/maven-public/'
-    }
-}
+The project uses:
+- **Java 21** as the target version
+- **Gradle 8.3** as the build tool
+- Maven repositories:
+  - Maven Central
+  - https://maven.mrnavastar.me/snapshots/
+  - https://maven.mrnavastar.me/releases/
 
-dependencies {
-    compileOnly 'group.aelysium.rustyconnector:core:5.2.1'
-}
-```
+## API Structure (0.9.x)
 
-Then remove the stub classes from `src/main/java/group/aelysium/rustyconnector/`.
+The RustyConnector 0.9.x API uses the following package structure:
+- `group.aelysium.rustyconnector.common.modules.*` - Module interfaces and builders
+- `group.aelysium.rustyconnector.common.events.*` - Event system
+- `group.aelysium.rustyconnector.proxy.*` - Proxy-specific classes
+- `net.kyori.adventure.text.*` - Text components (from Kyori Adventure)
+
+## Module Integration
+
+To integrate with the RustyConnector kernel:
+
+1. The `onStart()` method is called first to initialize the module
+2. The `bind()` method is called to integrate with kernel services
+3. Use `kernel.fetchModule()` to access other modules like EventManager
+4. The `close()` method is called when the module shuts down
+

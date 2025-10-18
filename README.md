@@ -7,7 +7,7 @@ A simple Hello World module for RustyConnector that demonstrates basic module cr
 This module demonstrates the essential components of a RustyConnector module:
 
 1. **Prints "Hello World"** when the module starts
-2. **Listens to the PROXY_STARTED event** and prints a message when it fires
+2. **Registers with the EventManager** to demonstrate event system integration
 3. **Prints a goodbye message** when the module shuts down
 
 ## Project Structure
@@ -22,6 +22,11 @@ rcm-helloworld/
 ├── build.gradle                           # Gradle build configuration
 └── README.md
 ```
+
+## Requirements
+
+- Java 21 or higher
+- RustyConnector 0.9.1 or higher
 
 ## Building
 
@@ -47,10 +52,10 @@ When the module loads, you should see:
 Hello World from RustyConnector Module!
 ```
 
-When the proxy finishes starting, you should see:
+When the EventManager is available, you should see:
 
 ```
-HelloWorld module detected proxy started event!
+HelloWorld module registered with EventManager!
 ```
 
 ## Code Overview
@@ -63,7 +68,7 @@ The main module class implements the `Module` interface and contains:
 - `details()`: Returns information about the module (returns null in this simple example)
 - `Builder`: Extends `ExternalModuleBuilder` and contains:
   - `onStart()`: Called when the module initializes - prints "Hello World"
-  - `bind()`: Called to register event listeners - listens for PROXY_STARTED event
+  - `bind()`: Called to integrate with the kernel - registers with EventManager
 
 ### rc-module.json
 
@@ -73,8 +78,6 @@ The module configuration file that tells RustyConnector:
 - `name`: Module display name
 - `description`: What the module does
 - `environments`: Where the module runs (proxy, server, or both)
-- `dependencies`: Other modules this module requires
-- `softDependencies`: Optional module dependencies
 
 ## Learn More
 

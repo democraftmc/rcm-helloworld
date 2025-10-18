@@ -7,15 +7,19 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
+    maven { url = "https://maven.mrnavastar.me/snapshots/" }
+    maven { url = "https://maven.mrnavastar.me/releases/" }
 }
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:24.0.1'
+    compileOnly 'group.aelysium.rustyconnector:core:0.9.1'
+    compileOnly 'net.kyori:adventure-api:4.17.0'
+    compileOnly 'org.jetbrains:annotations:24.1.0'
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
