@@ -16,10 +16,16 @@ The module depends on:
 The project uses:
 - **Java 21** as the target version
 - **Gradle 8.3** as the build tool
+- **Shadow Gradle Plugin 9.0.0-beta4** for JAR packaging
 - Maven repositories:
   - Maven Central
   - https://maven.mrnavastar.me/snapshots/
   - https://maven.mrnavastar.me/releases/
+
+The build follows RustyConnector's standard module structure:
+- Uses shadowJar task to create the final artifact
+- Regular jar task is disabled in favor of shadowJar
+- Module version and artifact name are configured in gradle.properties
 
 ## API Structure (0.9.x)
 

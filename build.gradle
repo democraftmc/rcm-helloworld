@@ -1,9 +1,18 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.gradleup.shadow:shadow-gradle-plugin:9.0.0-beta4'
+    }
 }
 
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'com.gradleup.shadow'
+
 group = 'group.aelysium'
-version = '1.0.0'
+version = module_version
 
 repositories {
     mavenCentral()
@@ -23,6 +32,22 @@ java {
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+compileJava {
+    options.encoding = "UTF-8"
 }
+
+shadowJar {
+    archiveBaseName.set(archives_base_name)
+    archiveClassifier.set('')
+    mergeServiceFiles()
+}
+
+tasks.named('jar').configure {
+    enabled = false
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-Xdoclint:none']
+}
+
+jar.finalizedBy(shadowJar)
