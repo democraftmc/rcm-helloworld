@@ -1,0 +1,10 @@
+{
+  "main": "group.aelysium.rcm.helloworld.HelloWorldModule$Builder",
+  "name": "HelloWorld",
+  "description": "A simple Hello World module for RustyConnector to demonstrate basic module creation and event listening",
+  "environments": [
+    "proxy"
+  ],
+  "dependencies": [],
+  "softDependencies": []
+}
