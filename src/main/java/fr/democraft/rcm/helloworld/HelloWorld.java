@@ -15,7 +15,6 @@ public class HelloWorld implements Module {
     public void close() throws Exception {
         // Function to stop your module
         // Closes this resource, relinquishing any underlying resources.
-        this.close();
     }
 
     @Override
