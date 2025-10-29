@@ -1,6 +1,7 @@
 package fr.democraft.rcm.helloworld;
 
 import group.aelysium.rustyconnector.RC;
+import group.aelysium.rustyconnector.common.events.EventManager;
 import group.aelysium.rustyconnector.common.modules.ExternalModuleBuilder;
 import group.aelysium.rustyconnector.common.modules.Module;
 import group.aelysium.rustyconnector.proxy.ProxyKernel;
@@ -31,7 +32,7 @@ public class HelloWorld implements Module {
             System.out.println("Hello World from RustyConnector Module!");
             // Example usages would be registering Lang nodes or adding events to the EventListener.
             // How to add events? Like this (you're welcome):
-            RC.Kernel().fetchModule("EventManager").onStart(m -> {
+            kernel.<EventManager>fetchModule("EventManager").onStart(m -> {
                 m.listen(OnServerRegister.class);
             });
         }
